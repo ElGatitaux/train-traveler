@@ -1,0 +1,5 @@
+update_journeys:
+  name: Update Journeys
+  description: |
+    Force update of train journey data from SNCF API.
+    This service triggers an immediate refresh of journey information managed by the Train Traveler integration.
