@@ -58,11 +58,11 @@ class NextJourneyEntity(JourneyBaseEntity, SensorEntity):
         super().__init__(coordinator, index, type)
 
         self._attr_unique_id = f"{self.short_start_name()}_{self.short_end_name()}_{self.type}_journey_{self.index + 1}"
-        self._attr_native_value = self.timezone.localize(self.data.journey.departure_date_time)
+        self._attr_native_value = self.data.journey.departure_date_time.replace(tzinfo=self.timezone)
 
     def _handle_journey_update(self) -> None:
         _LOGGER.debug("[%s] updating: %s - %s", type(self).__name__, self.start_label, self.end_label)
-        self._attr_native_value = self.timezone.localize(self.data.journey.departure_date_time)
+        self._attr_native_value = self.data.journey.departure_date_time.replace(tzinfo=self.timezone)
         self.async_write_ha_state()
 
     @property
@@ -74,8 +74,8 @@ class NextJourneyEntity(JourneyBaseEntity, SensorEntity):
         return {
             ATTR_LINE_JOURNEY: self.data.journey.sections[0].informations.label,
             ATTR_DIRECTION_JOURNEY: self.data.journey.sections[0].informations.direction,
-            ATTR_DEPARTURE_TIME_JOURNEY: self.timezone.localize(self.data.journey.departure_date_time),
-            ATTR_ARRIVAL_TIME_JOURNEY: self.timezone.localize(self.data.journey.arrival_date_time),
+            ATTR_DEPARTURE_TIME_JOURNEY: self.data.journey.departure_date_time.replace(tzinfo=self.timezone),
+            ATTR_ARRIVAL_TIME_JOURNEY: self.data.journey.arrival_date_time.replace(tzinfo=self.timezone),
             ATTR_DURATION_JOURNEY: self.data.journey.sections[0].duration,
             ATTR_PHYSICAL_MODE_JOURNEY: self.data.journey.sections[0].informations.physical_mode,
             ATTR_DEPARTURE_JOURNEY: self.start_label,
@@ -87,11 +87,11 @@ class JourneyEntity(JourneyBaseEntity, SensorEntity):
     def __init__(self, coordinator, index, type):
         super().__init__(coordinator, index, type)
         self._attr_unique_id = f"{self.short_start_name()}_{self.short_end_name()}_journeys"
-        self._attr_native_value = self.timezone.localize(self.data.journey.departure_date_time)
+        self._attr_native_value = self.data.journey.departure_date_time.replace(tzinfo=self.timezone)
 
     def _handle_journey_update(self) -> None:
         _LOGGER.debug("[%s] updating: %s - %s", type(self).__name__, self.start_label, self.end_label)
-        self._attr_native_value = self.timezone.localize(self.data.journey.departure_date_time)
+        self._attr_native_value = self.data.journey.departure_date_time.replace(tzinfo=self.timezone)
         self.async_write_ha_state()
 
     @property
@@ -113,8 +113,8 @@ class JourneyEntity(JourneyBaseEntity, SensorEntity):
             journeys.append({
                 ATTR_LINE_JOURNEY: data.journey.sections[0].informations.label,
                 ATTR_DIRECTION_JOURNEY: data.journey.sections[0].informations.direction,
-                ATTR_DEPARTURE_TIME_JOURNEY: self.timezone.localize(data.journey.departure_date_time),
-                ATTR_ARRIVAL_TIME_JOURNEY: self.timezone.localize(data.journey.arrival_date_time),
+                ATTR_DEPARTURE_TIME_JOURNEY: data.journey.departure_date_time.replace(tzinfo=self.timezone),
+                ATTR_ARRIVAL_TIME_JOURNEY: data.journey.arrival_date_time.replace(tzinfo=self.timezone),
                 ATTR_DURATION_JOURNEY: data.journey.sections[0].duration,
                 ATTR_PHYSICAL_MODE_JOURNEY: data.journey.sections[0].informations.physical_mode,
                 ATTR_DEPARTURE_JOURNEY: self.start_label,
@@ -134,11 +134,11 @@ class DepartureEntity(JourneyBaseEntity, SensorEntity):
         super().__init__(coordinator, index, type)
 
         self._attr_unique_id = f"{self.short_start_name()}_{self.short_end_name()}_{self.type}_journey_departure_{self.index + 1}"
-        self._attr_native_value = self.timezone.localize(self.data.journey.departure_date_time)
+        self._attr_native_value = self.data.journey.departure_date_time.replace(tzinfo=self.timezone)
 
     def _handle_journey_update(self) -> None:
         _LOGGER.debug("[%s] updating: %s - %s", type(self).__name__, self.start_label, self.end_label)
-        self._attr_native_value = self.timezone.localize(self.data.journey.departure_date_time)
+        self._attr_native_value = self.data.journey.departure_date_time.replace(tzinfo=self.timezone)
         self.async_write_ha_state()
 
     @property
@@ -152,11 +152,11 @@ class ArrivalEntity(JourneyBaseEntity, SensorEntity):
         super().__init__(coordinator, index, type)
 
         self._attr_unique_id = f"{self.short_start_name()}_{self.short_end_name()}_{self.type}_journey_arrival_{self.index + 1}"
-        self._attr_native_value = self.timezone.localize(self.data.journey.arrival_date_time)
+        self._attr_native_value = self.data.journey.arrival_date_time.replace(tzinfo=self.timezone)
 
     def  _handle_journey_update(self) -> None:
         _LOGGER.debug("[%s] updating: %s - %s", type(self).__name__, self.start_label, self.end_label)
-        self._attr_native_value = self.timezone.localize(self.data.journey.arrival_date_time)
+        self._attr_native_value = self.data.journey.arrival_date_time.replace(tzinfo=self.timezone)
         self.async_write_ha_state()
 
     @property
