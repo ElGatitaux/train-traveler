@@ -1,5 +1,5 @@
 import logging
-import pytz
+from zoneinfo import ZoneInfo
 
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.core import callback
@@ -21,7 +21,7 @@ class JourneyBaseEntity(CoordinatorEntity):
         self.start_label = self.coordinator.data.start.label
         self.end_label = self.coordinator.data.end.label
         self.data = self.coordinator.data.journeys[self.index]
-        self.timezone = pytz.timezone("Europe/Paris")
+        self.timezone = ZoneInfo("Europe/Paris")
 
         _LOGGER.debug("Init %s Journey #%s %s - %s", self.type, (self.index + 1), self.start_label, self.end_label)
 
